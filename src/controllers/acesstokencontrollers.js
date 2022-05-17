@@ -1,4 +1,4 @@
-const UserAction = require("../models/UserAction")
+const UserAction = require("../../src/models/useraction");
 
 
 
