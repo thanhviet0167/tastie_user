@@ -3,7 +3,7 @@ const host = require('../../config/connectMySql')
 const bcrypt = require('bcrypt')
 const moment = require('moment')
 const jwt = require('jsonwebtoken');
-const UserAction = require("./useraction");
+
 
 const client = require('twilio')('AC7777ca9aeeae7c0582e1499a2e50efcd', 'd1fa0bc2fb18e8cbae0def56acc2967b', {
     lazyLoading: true
@@ -52,18 +52,18 @@ class UserModel {
 
 
 
-    static findUserByPhone(phone){
+    static  findUserByPhone(phone){
         
-        let sql = `SELECT * FROM Tastie.User WHERE phone = '${phone}'`
+        let sql =  `SELECT * FROM Tastie.User WHERE phone = '${phone}'`
 
-        return host.execute(sql);
+        return  host.execute(sql);
     }
 
-    static findUserByEmail(email){
+    static async findUserByEmail(email){
         
         let sql = `SELECT * FROM Tastie.User WHERE email = '${email}'`
 
-        return host.execute(sql);
+        return await host.execute(sql);
     }
 
     static findUserById(Id){
@@ -240,6 +240,92 @@ class UserModel {
         
     }
 
+    static async getOperationsTime(provider_id){
+        let sqlGetOperation = `SELECT * FROM Tastie.Operation where provider_id = ${provider_id};`
+
+            const [opetations, _] = await host.execute(sqlGetOperation)
+
+            let sqlGetStatusProvider = `SELECT status FROM Provider where provider_id = ${provider_id};`
+
+            const statusProvider = await host.execute(sqlGetStatusProvider)
+
+            
+            var monday = {}, tuesday = {}, wednesday = {}, thursday = {}, friday = {}, saturday = {}, sunday = {}
+
+            const dateNumber = new Date().getDay()
+
+            for(var i = 0; i < opetations.length; i++){
+                if(opetations[i]['day'] === "2")
+                {
+                    monday = {
+                        is_day_off: dateNumber !== 1 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "3")
+                {
+                    tuesday = {
+                        is_day_off: dateNumber !== 2 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "4")
+                {
+                    wednesday = {
+                        is_day_off: dateNumber !== 3 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "5")
+                {
+                    thursday = {
+                        is_day_off: dateNumber !== 4 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "6")
+                {
+                    friday = {
+                        is_day_off: dateNumber !== 5 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "7")
+                {
+                    saturday = {
+                        is_day_off: dateNumber !== 6 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+                if(opetations[i]['day'] === "1")
+                {
+                    sunday = {
+                        is_day_off: dateNumber !== 0 || statusProvider[0][0]['status'] !== 0 ? false : true,
+                        open_time: opetations[i]['open_time'],
+                        close_time: opetations[i]['close_time']
+                    }
+                }
+            }
+
+
+            var operation_time  = {
+                monday,
+                tuesday,
+                wednesday,
+                thursday,
+                friday,
+                saturday,
+                sunday
+            }
+            return operation_time
+    }
+
     static async getProvider (user_id){
         try {
             let sql = `SELECT * FROM Tastie.Provider where user_id = ${user_id};`
@@ -250,7 +336,7 @@ class UserModel {
 
             console.log("Hello")
             console.log(provider_info[0])
-            const operation_time = await UserAction.getOperationsTime(provider_info[0]['provider_id'])
+            const operation_time = await this.getOperationsTime(provider_info[0]['provider_id'])
 
             let sqlGetProviderCategory = `CALL Get_Provider_Categories(${provider_info[0]['provider_id']});`
 

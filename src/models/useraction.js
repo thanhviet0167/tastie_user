@@ -1,8 +1,6 @@
 require("dotenv").config();
 
-"user strict"
-const nodemailer = require("nodemailer");
-
+const UserModel = require("./usermodel");
 
 const sendgridMail = require('@sendgrid/mail');
 const geneString = require("../constant/genestring");
@@ -11,7 +9,7 @@ sendgridMail.setApiKey(process.env.API_KEY_MAIL)
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const UserModel = require("../models/usermodel");
+
 
 var randomString = require("randomstring")
 //
@@ -19,10 +17,10 @@ var randomString = require("randomstring")
 const host = require('../../config/connectMySql')
 
 const moment = require('moment');
-const { parseTwoDigitYear } = require("moment");
 
 const Geolib = require('geolib');
-const e = require("express");
+
+
 
 
 class UserAction{
@@ -155,8 +153,11 @@ class UserAction{
 
                 const decoded_info = jwt.verify(data.token,process.env.REFRESH_TOKEN_SECRET)
                 console.log(decoded_info)
+                console.log(UserModel)
+              
                 if(decoded_info['phone'])
                 {
+                
                     var [result, _] = await UserModel.findUserByPhone(decoded_info['phone'])
                     if(result[0]['user_token']===data.token){
                         const decoded = jwt.verify(data.token,process.env.REFRESH_TOKEN_SECRET)
