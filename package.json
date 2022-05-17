@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build" : "node ./bin/www"
+    "build": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "dotenv": "^10.0.0",
     "enum": "^3.0.4",
     "geolib": "^3.3.3",
+    "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
     "messagebird": "^3.7.1",
     "moment": "^2.29.3",
