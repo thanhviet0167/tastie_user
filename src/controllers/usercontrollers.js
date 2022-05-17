@@ -6,7 +6,7 @@ const UserModel = require("../models/usermodel");
 
 const { encoded_Data, decoded_Data } = require("../constant/hash");
 const bcrypt = require('bcrypt');
-const UserAction = require("../models/UserAction");
+const UserAction = require("../../src/models/useraction");
 const messageBird = require('messagebird')('YqFwMJdzEIudazqJNAMOHXRGg');
 
 class UserControllers{
