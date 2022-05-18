@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 const port = 3007
 const bodyParser = require('body-parser')
-
+const cors = require('cors')
 //
 
 const routeUrl = require('../src/routes/index')
@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 
 
 
-
+app.use(cors());
 // init app
 
 app.get('/', (req, res) => res.send("Hello Tastie"))
