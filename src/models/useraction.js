@@ -499,7 +499,7 @@ class UserAction{
             const {user_id, product_id, special_instruction, quantity, additional_option} = data
             console.log(additional_option.length)
             if(additional_option.length  <= 0){
-                let sqlInsertProductIntoCart = `CALL Insert_Product_Into_Cart(${user_id}, ${product_id}, '?', '?', '${special_instruction}', ${quantity}, '${item_code}');`
+                let sqlInsertProductIntoCart = `CALL Insert_Product_Into_Cart(${user_id}, ${product_id}, '', '', '${special_instruction}', ${quantity}, '${item_code}');`
                 await host.execute(sqlInsertProductIntoCart)
                 this.sleepFor(1000)
                 
