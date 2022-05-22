@@ -33,7 +33,8 @@ const url_get_all_category = '/v1/api/tastie/home/get-all-category'
 
 const url_clear_cart = '/v1/api/tastie/tastie/clear-cart/:customer_id'
 
-
+const url_add_to_favorite = '/v1/api/tastie/add-to-favorite'
+const url_remove_to_favorite = '/v1/api/tastie/remove-from-favorite'
 
 // Order
 
@@ -107,5 +108,7 @@ module.exports = {
     url_payment_by_momo,
     url_payment_by_zalo,
     url_add_notification,
-    url_get_all_notification
+    url_get_all_notification,
+    url_add_to_favorite,
+    url_remove_to_favorite
 };

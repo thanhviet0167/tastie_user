@@ -1,13 +1,5 @@
 require("dotenv").config();
 
-
-
-const sendgridMail = require('@sendgrid/mail');
-
-sendgridMail.setApiKey(process.env.API_KEY_MAIL)
-
-
-
 const host = require('../../config/connectMySql')
 
 const moment = require('moment');
@@ -102,6 +94,7 @@ class OrderModel{
            
             var response = {
                 merchant_name: listOrderDetail[0]['merchant_name'] ? listOrderDetail[0]['merchant_name'] : null,
+                provider_id : listOrderDetail[0]['provider_id'] ? listOrderDetail[0]['provider_id'] : 0,
                 items : [
                 ],
                 num_items : 0,
@@ -547,7 +540,7 @@ class OrderModel{
     static async addShipperReview(data){
         try {
             const {order_id, create_at, content, stars} = data
-            let sqlAddShipperReview = `CALL Add_Order_Review(${order_id}, '${create_at}', '${content}', ${stars});`
+            let sqlAddShipperReview = `CALL Add_Shipper_Review(${order_id}, '${create_at}', '${content}', ${stars});`
 
 
             await host.execute(sqlAddShipperReview)

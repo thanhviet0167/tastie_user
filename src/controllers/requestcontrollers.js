@@ -338,6 +338,41 @@ class requestControllers{
         }
     }
 
+    static addToFavorite = async ( req, res) => {
+        try {
+            
+          
+            const status = await UserAction.addToFavorite(req.body)
+            console.log(status)
+            res.status(200).json({
+                status
+            })
+
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false
+            })
+        }
+    }
+
+    static removeFromFavorite = async ( req, res) => {
+        try {
+            
+          
+            const status = await UserAction.removeFromFavorite(req.body)
+           
+            res.status(200).json({
+                status
+            })
+
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false
+            })
+        }
+    }
 
     
 }

@@ -5,7 +5,7 @@ const UserModel = require("./usermodel");
 const sendgridMail = require('@sendgrid/mail');
 const geneString = require("../constant/genestring");
 
-sendgridMail.setApiKey(process.env.API_KEY_MAIL)
+
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
@@ -25,6 +25,16 @@ const Geolib = require('geolib');
 
 class UserAction{
 
+    static async getSGKey(){
+        try {
+            const [key,_] = await host.execute("SELECT * FROM Tastie.APIKey WHERE `key` = 'SG1';")
+            console.log(key)
+            return key[0]['value']
+        } catch (error) {
+            return ''
+        }
+    }
+
     static async sendEmailToResestPassword(phone, email){
         
 
@@ -35,6 +45,11 @@ class UserAction{
             var new_HashPassword = await bcrypt.hash(newpassword, salt);
             const [result, _] = await UserModel.resestPassword(phone, new_HashPassword)
 
+            const apiKeySG = await this.getSGKey()
+
+            // set ApiKey
+
+            sendgridMail.setApiKey(apiKeySG)
 
             const content = {
                 from : 'thanhviet0377@gmail.com',
@@ -49,7 +64,7 @@ class UserAction{
                     return false
                 }
                 else{
-                    console.log(info)
+                  //  console.log(info)
                     return true
                 }
             
@@ -67,6 +82,14 @@ class UserAction{
         
 
         try {
+
+
+           const apiKeySG = await this.getSGKey()
+          
+            // set ApiKey
+
+            sendgridMail.setApiKey(apiKeySG)
+
             var code = randomString.generate({
                 length : 6,
                 charset : 'numeric'
@@ -91,7 +114,7 @@ class UserAction{
                     }
                 }
                 else{
-                 //   console.log(info)
+                    console.log(info)
                   
                     const result = {
                         verifyEmailToken : verifyEmailToken,
@@ -444,12 +467,13 @@ class UserAction{
                 // Tinh tien option
                 if(response.items[i]['additionalOptions'].length > 0){
                     for(var j = 0; j < response.items[i]['additionalOptions'].length; j++){
-                        _totalProductPrice += response.items[i]['additionalOptions'][j]['price']
+                        _totalProductPrice += response.items[i]['additionalOptions'][j]['price'] ? response.items[i]['additionalOptions'][j]['price'] : 0
                     }
                 }
                 _totalProductPrice += response.items[i]['productPrice']*response.items[i]['quantity']
                 response.items[i]['totalProductPrice'] = _totalProductPrice
                 _subtotalPrice += _totalProductPrice
+                _totalProductPrice = 0
             }
 
             response['subtotalPrice'] = _subtotalPrice
@@ -1113,6 +1137,28 @@ class UserAction{
 
    
 
+
+    static async addToFavorite(data){
+        try {
+            const {provider_id, user_id} = data
+            await host.execute(`CALL Add_To_Favorite(${user_id}, ${provider_id});`)
+            return true
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
+    static async removeFromFavorite(data){
+        try {
+            const {provider_id, user_id} = data
+            await host.execute(`CALL Remove_From_Favorite(${user_id}, ${provider_id});`)
+            return true
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
 }
 
 

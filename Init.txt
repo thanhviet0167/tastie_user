@@ -297,3 +297,14 @@
 }
 
 
+// localhost:3007/v1/api/tastie/add-to-favorite
+{
+    "provider_id": 1000007,
+    "user_id" : 1000005
+}
+
+// localhost:3007/v1/api/tastie/remove-from-favorite
+{
+    "provider_id": 1000007,
+    "user_id" : 1000005
+}

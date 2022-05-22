@@ -1,13 +1,4 @@
 require("dotenv").config();
-
-
-
-const sendgridMail = require('@sendgrid/mail');
-
-sendgridMail.setApiKey(process.env.API_KEY_MAIL)
-
-
-
 const mongoose = require('mongoose')
 
 
