@@ -263,7 +263,9 @@
     "address" : "abc def dbc",
     "city" : "Sai Gon",
     "type" : 4,
-    "longtitude" : "116.6805406",
+    "pre_longitude" : "116.6805406",
+    "pre_latitude" : "12.762328",
+    "longitude" : "116.6805406",
     "latitude" : "12.762328"
 }
 
@@ -307,4 +309,14 @@
 {
     "provider_id": 1000007,
     "user_id" : 1000005
+}
+
+
+// http://localhost:3007/v1/api/tastie/home/get-list-provider-by-ecoupon
+{
+    "ecoupon_id" : 1,
+    "longitude" : "106.7002387",
+    "latitude" : "10.7652217",
+    "limit" : 5,
+    "offset" : 1
 }

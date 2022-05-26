@@ -365,6 +365,16 @@ class UserModel {
     static async addCustomerAddress (data){
         try {
             const {customer_id, address, city, type, longtitude, latitude} = data
+            // check type loai 1, 2
+            if(type === 1 || type === 2){
+                const [_address, _] = await host.execute(`SELECT * FROM Tastie.CustomerAddress WHERE customer_id = ${customer_id} AND type = ${type};`)
+                
+                if(_address.length)
+                    return false
+            }
+            
+
+
             let addCustomerAddress = `CALL Add_Customer_Address(${customer_id}, '${address}', '${city}', ${type}, '${longtitude}', '${latitude}');`
             await host.execute(addCustomerAddress)
             return true
@@ -377,8 +387,8 @@ class UserModel {
 
     static async updateCustomerAddress (data){
         try {
-            const {customer_id, address, city, type, longtitude, latitude} = data
-            let updateCustomerAddress = `CALL Update_Customer_Address(${customer_id}, '${address}', '${city}', ${type}, '${longtitude}', '${latitude}');`
+            const {customer_id, address, city, type, pre_longitude, pre_latitude, longitude, latitude} = data
+            let updateCustomerAddress = `CALL Update_Customer_Address(${customer_id}, '${address}', '${city}', ${type}, '${pre_longitude}', '${pre_latitude}','${longitude}', '${latitude}');`
             await host.execute(updateCustomerAddress)
             return true
         } catch (error) {
@@ -386,6 +396,8 @@ class UserModel {
             return false
         }
     }
+
+    
 
 }
 
