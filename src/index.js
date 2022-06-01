@@ -37,11 +37,11 @@ connectMongoDB();
 routeUrl(app);
 
 
-
-
-
 // Listen port
 // `` : type script
 
-app.listen(port, () => console.log(`Connect sucessfully node js with express, port default : ${port}`))
+app.listen(port, () => 
+{   
+    console.log(`Connect sucessfully node js with express, port default : ${port}`)
+})
 

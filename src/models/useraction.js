@@ -1,23 +1,13 @@
 require("dotenv").config();
-
 const UserModel = require("./usermodel");
-
 const sendgridMail = require('@sendgrid/mail');
 const geneString = require("../constant/genestring");
-
-
-
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-
-
 var randomString = require("randomstring")
 //
-
 const host = require('../../config/connectMySql')
-
 const moment = require('moment');
-
 const Geolib = require('geolib');
 
 

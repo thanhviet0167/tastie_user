@@ -156,13 +156,44 @@ class OrderModel{
         }
     }
 
+    static rand(length, ...ranges) {
+        var str = "";                                                       // the string (initialized to "")
+        while(length--) {                                                   // repeat this length of times
+          var ind = Math.floor(Math.random() * ranges.length);              // get a random range from the ranges object
+          var min = ranges[ind][0].charCodeAt(0),                           // get the minimum char code allowed for this range
+              max = ranges[ind][1].charCodeAt(0);                           // get the maximum char code allowed for this range
+          var c = Math.floor(Math.random() * (max - min + 1)) + min;        // get a random char code between min and max
+          str += String.fromCharCode(c);                                    // convert it back into a character and append it to the string str
+        }
+        return str;                                                         // return str
+    }
+
+    static cyrb53 = function(str, seed = 0) {
+        console.log(str)
+      let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+      for (let i = 0, ch; i < str.length; i++) {
+          ch = str.charCodeAt(i);
+          h1 = Math.imul(h1 ^ ch, 2654435761);
+          h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+      return 4294967296 * (2097151 & h2) + (h1>>>0);
+  };
+
+    static createUUID() {
+        var date_time= new Date().toLocaleString()
+       // let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
+        return this.rand(7, ["A", "Z"], ["0", "9"])+ '-' +  this.cyrb53(date_time);
+    }
+
     static async submitOrder(data){
         try {
             const {delivery_mode, customer_id, delivery_address,	
                 customer_phone, payment_method, payment_status, promotion_code,
                 ecoupon_code, delivery_method, schedule_time, tips, delivery_fee, subtotal, total} = data
             
-            var order_code = UserAction.generateUUID()
+            var order_code = this.createUUID()
 
             let sqlSubmitOrder = `CALL Submit_Basic_Info_Order_Delivery(${delivery_mode}, '${order_code}', ${customer_id}, '${delivery_address}', 
             '${customer_phone}', ${payment_method}, ${payment_status}, '${promotion_code}', '${ecoupon_code}',
@@ -183,7 +214,7 @@ class OrderModel{
             const {delivery_mode, customer_id, payment_method, payment_status, promotion_code,
                 ecoupon_code, delivery_method, schedule_time, subtotal, total} = data
 
-            var order_code = UserAction.generateUUID()
+            var order_code = this.createUUID()
             let sqlSubmitOrderPickup = `CALL Submit_Basic_Info_Order_Pickup(${delivery_mode}, '${order_code}', ${customer_id},  
                 ${payment_method}, ${payment_status}, '${promotion_code}', '${ecoupon_code}',
                 ${delivery_method}, '${schedule_time}', ${subtotal}, ${total});`
