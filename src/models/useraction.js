@@ -704,12 +704,20 @@ class UserAction{
 
     static async SearchBar(data){
         try {
-            const {q, type, longitude, latitude} = data
+            const {user_id, q, type, longitude, latitude} = data
 
 
             // long : 106.68250448518744, lat : 10.763019107348029
             let sqlSelectProvider = `SELECT * FROM Tastie.Provider;`
             const [list_provider, _] = await host.execute(sqlSelectProvider)
+
+            // get list provider favorite
+            if(!user_id){
+                user_id = -1
+            }
+            const _list_provider_favorite = await host.execute(`CALL Get_Favorite_Restaurant_By_Customer(${user_id});`)
+            const list_provider_favorite = _list_provider_favorite[0][0]
+
             var _list_provider = list_provider.filter((provider)=> {
                 var distance = Geolib.getDistance({
                     latitude, longitude
@@ -746,6 +754,11 @@ class UserAction{
                     },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
 
                     let delivery_fee = this.delivery_fee(distance)
+
+                    var index_favorite = list_provider_favorite.findIndex(p => {
+                        return p['provider_id'] === list_provider[i]['provider_id']
+                    })
+
                     var new_item = {
                         name: _list_provider[i].merchant_name,
                         provider_id : _list_provider[i].provider_id,
@@ -764,7 +777,8 @@ class UserAction{
                         order_totals : _list_provider[i]['order_totals'],
                         distance,
                         delivery_fee,
-                        operation_time
+                        operation_time,
+                        isFavorite : index_favorite > -1 ? true : false
                     }
 
                     response.items.push(new_item)
@@ -814,6 +828,10 @@ class UserAction{
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
 
                         let delivery_fee = this.delivery_fee(distance)
+
+                        var index_favorite = list_provider_favorite.findIndex(p => {
+                            return p['provider_id'] === list_provider[i]['provider_id']
+                        })
                         var new_item = {
                             name: _list_provider[i].merchant_name,
                             provider_id : _list_provider[i].provider_id,
@@ -832,7 +850,8 @@ class UserAction{
                             order_totals : _list_provider[i]['order_totals'],
                             distance,
                             delivery_fee,
-                            operation_time
+                            operation_time,
+                            isFavorite : index_favorite > -1 ? true : false
                         }
     
                         response.items.push(new_item)
@@ -897,6 +916,10 @@ class UserAction{
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
 
                         let delivery_fee = this.delivery_fee(distance)
+
+                        var index_favorite = list_provider_favorite.findIndex(p => {
+                            return p['provider_id'] === list_provider[i]['provider_id']
+                        })
                         var new_item = {
                             name: _list_provider[i].merchant_name,
                             provider_id : _list_provider[i].provider_id,
@@ -915,7 +938,8 @@ class UserAction{
                             order_totals : _list_provider[i]['order_totals'],
                             distance,
                             delivery_fee,
-                            operation_time
+                            operation_time,
+                            isFavorite : index_favorite > -1 ? true : false
                         }
     
                         response.items.push(new_item)

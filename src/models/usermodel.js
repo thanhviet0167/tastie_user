@@ -334,8 +334,6 @@ class UserModel {
 
             const [provider_info, _] =  await host.execute(sql)
 
-            console.log("Hello")
-            console.log(provider_info[0])
             const operation_time = await this.getOperationsTime(provider_info[0]['provider_id'])
 
             let sqlGetProviderCategory = `CALL Get_Provider_Categories(${provider_info[0]['provider_id']});`
