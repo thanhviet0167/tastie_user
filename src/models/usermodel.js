@@ -87,6 +87,7 @@ class UserModel {
             // var [user, _] = await UserModel.findUserById('1000004')
             // console.log(user)
             var [result, _] = await UserModel.findUserByPhone(data.phone)
+        
             return await bcrypt.compare(data.password, result[0].password)
         }
         else{
