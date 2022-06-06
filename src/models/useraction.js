@@ -723,7 +723,7 @@ class UserAction{
                     latitude, longitude
                 },{ latitude: parseFloat(provider['latitude']), longitude: parseFloat(provider['longitude'])})
 
-                return distance <= 15000
+                return distance <= 25000
             })
 
            // console.log(_list_provider)
@@ -1187,7 +1187,7 @@ class UserAction{
                     latitude, longitude
                 },{ latitude: parseFloat(provider['latitude']), longitude: parseFloat(provider['longitude'])})
                 console.log(distance)
-                return distance <= 15000
+                return distance <= 25000
             })
 
             
@@ -1228,6 +1228,78 @@ class UserAction{
             }
 
             return response.slice( offset - 1  === 0 ? offset-1 : limit*(offset-1), offset*limit <= response.length ? offset*limit : offset*limit-1)
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
+
+    static async getListProviderFavorite(data){
+        try {
+            const {longitude, latitude, user_id} = data
+            const _list_provider_favorite = await host.execute(`CALL Get_Favorite_Restaurant_By_Customer(${user_id});`)
+
+        
+            const list_provider_favorite = _list_provider_favorite[0][0]
+            var list_provider = []
+            for(var i = 0; i < list_provider_favorite.length ; i++){
+                const provider_info = await host.execute(`SELECT * FROM Tastie.Provider WHERE provider_id = ${list_provider_favorite[i]['provider_id']}`)
+                list_provider.push(provider_info[0][0])
+            }
+      
+            
+            var _list_provider = list_provider.filter((provider)=> {
+                var distance = Geolib.getDistance({
+                    latitude, longitude
+                },{ latitude: parseFloat(provider['latitude']), longitude: parseFloat(provider['longitude'])})
+                console.log(distance)
+                return distance <= 25000
+            })
+
+            
+            var response = []
+
+            for(var i = 0; i < _list_provider.length; i++){
+                let operation_time =  await this.getOperationsTime(_list_provider[i].provider_id)
+                var distance = Geolib.getDistance({
+                    latitude, longitude
+                },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
+
+                let delivery_fee = this.delivery_fee(distance)
+                var new_provider = {
+                    name: _list_provider[i].merchant_name,
+                    provider_id : _list_provider[i].provider_id,
+                    avatar: _list_provider[i].avatar,
+                    estimated_cooking_time: _list_provider[i].estimated_cooking_time,
+                    rating: _list_provider[i].rating,
+                    isFavorite: false,
+                    currentPromotion: null,
+                    latitude: _list_provider[i]['latitude'], 
+                    longitude: _list_provider[i]['longitude'],
+                    address: _list_provider[i]['address'],
+                    price_range: _list_provider[i]['price_range'],
+                    profile_pic: _list_provider[i]['avatar'],
+                    has_promo: true,
+                    customer_rating: _list_provider[i]['rating'],
+                    order_totals : _list_provider[i]['order_totals'],
+                    distance,
+                    delivery_fee,
+                    operation_time
+                }
+
+                response.push(new_provider)
+            
+            }
+
+            return response.sort((p1, p2) => {
+                if(p1[distance] > p2[distance]){
+                    return -1
+                }
+                if(p1[distance] < p2[distance]){
+                    return 1
+                }
+                return 0
+            })
         } catch (error) {
             console.log(error)
             return []

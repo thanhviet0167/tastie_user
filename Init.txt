@@ -321,3 +321,10 @@
     "limit" : 5,
     "offset" : 1
 }
+
+// localhost:3007/v1/api/tastie/home/get-list-provider-favorite
+{
+    "user_id" : 1000001,
+    "longitude" : "106.7002387",
+    "latitude" : "10.7652217"
+}

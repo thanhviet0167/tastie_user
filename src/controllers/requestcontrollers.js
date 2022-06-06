@@ -394,6 +394,25 @@ class requestControllers{
             })
         }
     }
+
+    static getListProviderFavorite = async ( req, res) => {
+        try {
+            
+            const response = await UserAction.getListProviderFavorite(req.body)
+           
+            res.status(200).json({
+                status : true,
+                response
+            })
+
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false,
+                response : []
+            })
+        }
+    }
     
 }
 
