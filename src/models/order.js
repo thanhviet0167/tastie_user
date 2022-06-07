@@ -402,7 +402,35 @@ class OrderModel{
                 
             })
 
-            return respone
+
+
+
+            // Tách lọc
+
+            const _list_order_id_review = await host.execute(`CALL Get_Rated_Orders(${customer_id});`)
+            const list_order_review = _list_order_id_review[0][0]
+
+            const list_order_rated = []
+            const list_order_not_rated = []
+            console.log(list_order_review)
+            for(var i = 0; i < respone.length; i++){
+                var index = list_order_review.findIndex(od => {
+                    return od['order_id'] === respone[i]['order_id']
+                    
+                })
+                if(index >= 0 ){
+                 list_order_rated.push(respone[i])       
+                }
+                else{
+                    list_order_not_rated.push(respone[i]) 
+                }
+            }
+
+            return {
+                list_order_history :respone,
+                list_order_rated,
+                list_order_not_rated 
+            }
 
         } catch (error) {
             console.log(error)
