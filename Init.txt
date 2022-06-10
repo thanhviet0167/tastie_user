@@ -95,7 +95,7 @@
     "accessToken" : ""
 }
 
-// http://localhost:3007/v1/api/tastie/store/customer_review/1000001 : GET
+// http://localhost:3007/v1/api/tastie/store/customer_review/1000036 : GET
 
 // localhost:3007/v1/api/tastie/tastie/get_cart/1000005 : GET
 

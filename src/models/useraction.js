@@ -327,8 +327,9 @@ class UserAction{
         try {
             
             let sqlGetListReview = `CALL Get_List_Review(${provider_id});`
-
+            
             const [ListReview, _] = await host.execute(sqlGetListReview)
+            console.log(ListReview)
             const listReview = ListReview[0]
             const response = []
 
@@ -339,7 +340,7 @@ class UserAction{
                     order_id: listReview[i]["order_id"] ? listReview[i]["order_id"] : null,
                     customer_info: {
                         username: `${listReview[i]['first_name'] ? listReview[i]['first_name'] : null}  ${listReview[i]['last_name']
-                     ? listReview[i]['last_name'] : null}}`,
+                     ? listReview[i]['last_name'] : null}`,
                         avatar: listReview[i]['avatar'] ? listReview[i]['avatar'] : null
                     },
                     create_at: listReview[i]['create_at'] ? listReview[i]['create_at'] : null,
