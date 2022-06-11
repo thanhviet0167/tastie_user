@@ -637,7 +637,7 @@ class UserAction{
         }
         let convertDistance= distance /1000
         
-        if(convertDistance > 15)
+        if(convertDistance > 25)
         {
             return 0
         }
@@ -651,7 +651,7 @@ class UserAction{
             else if(convertDistance > 4 && convertDistance <= 5){
                 return 20000
             }
-            else if(convertDistance > 5 && convertDistance <= 15){
+            else if(convertDistance > 5 && convertDistance <= 25){
                 let tmp = convertDistance - 5
                 let convert_distance = Math.ceil(tmp)
                 return 20000 + convert_distance*2500   
@@ -678,30 +678,6 @@ class UserAction{
         }
     }
 
-
-    static  delivery_fee(distance){
-        let convertDistance= distance /1000
-        if(convertDistance > 15)
-        {
-            return 0
-        }
-        else{
-            if(convertDistance <= 3){
-                return 15000
-            }
-            else if(convertDistance > 3 && convertDistance <= 4){
-                return 18000
-            }
-            else if(convertDistance > 4 && convertDistance <= 5){
-                return 20000
-            }
-            else if(convertDistance > 5 && convertDistance <= 15){
-                let tmp = convertDistance - 5
-                let convert_distance = Math.ceil(tmp)
-                return 20000 + convert_distance*2500   
-            }
-        }
-    }
 
     static async SearchBar(data){
         try {
