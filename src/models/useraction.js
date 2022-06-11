@@ -726,7 +726,9 @@ class UserAction{
 
 
                 for(var i = 0; i < _list_provider.length; i++){
-                    let operation_time =  await this.getOperationsTime(_list_provider[i].provider_id)
+
+                    const dateNumber = new Date().getDay()
+                    const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
                     var distance = Geolib.getDistance({
                         latitude, longitude
                     },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
@@ -755,7 +757,7 @@ class UserAction{
                         order_totals : _list_provider[i]['order_totals'],
                         distance,
                         delivery_fee,
-                        operation_time,
+                        operation_time : operation_time[0][0][0],
                         isFavorite : index_favorite > -1 ? true : false
                     }
 
@@ -800,7 +802,8 @@ class UserAction{
                     
                     
                     for(var i = 0; i < _list_provider.length; i++){
-                        let operation_time =  await this.getOperationsTime(_list_provider[i].provider_id)
+                        const dateNumber = new Date().getDay()
+                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
                         var distance = Geolib.getDistance({
                             latitude, longitude
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
@@ -828,18 +831,12 @@ class UserAction{
                             order_totals : _list_provider[i]['order_totals'],
                             distance,
                             delivery_fee,
-                            operation_time,
+                            operation_time : operation_time[0][0][0],
                             isFavorite : index_favorite > -1 ? true : false
                         }
     
                         response.items.push(new_item)
-                
-
-                    
                     }
-
-                
-
                     return response
                 }
                 else if(type === "3"){ // provider_category
@@ -849,9 +846,7 @@ class UserAction{
                         let sqlSelectProduct = `CALL Get_Provider_By_Provider_Category('${category_infor.category_id}');`
                         const result_category_search = await host.execute(sqlSelectProduct)
                         var provider_id_list = result_category_search[0][0]
-                    
-                    
-                        
+                
                     }
                     else if(category_infor.category_type === "2")
                     {
@@ -888,7 +883,8 @@ class UserAction{
 
 
                     for(var i = 0; i < _list_provider.length; i++){
-                        let operation_time =  await this.getOperationsTime(_list_provider[i].provider_id)
+                        const dateNumber = new Date().getDay()
+                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
                         var distance = Geolib.getDistance({
                             latitude, longitude
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
@@ -916,7 +912,7 @@ class UserAction{
                             order_totals : _list_provider[i]['order_totals'],
                             distance,
                             delivery_fee,
-                            operation_time,
+                            operation_time : operation_time[0][0][0],
                             isFavorite : index_favorite > -1 ? true : false
                         }
     
@@ -933,7 +929,7 @@ class UserAction{
             
             console.log(error)
 
-            return null
+            return []
 
         }
     }
