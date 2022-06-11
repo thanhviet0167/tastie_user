@@ -631,6 +631,7 @@ class UserAction{
 
     static  delivery_fee(distance){
 
+        console.log(distance)
         if(distance <= 0)
         {
             return 0
@@ -942,7 +943,7 @@ class UserAction{
         try {
             let sqlSelectCustomerAdress = `CALL Get_Customer_Contact(${user_id});`
             const [list_address, _] = await host.execute(sqlSelectCustomerAdress)
-
+            console.log(list_address)
             const respone = {
                 user_id,
                 user_phone: list_address[0][0]['phone'] ? list_address[0][0]['phone'] : null,
