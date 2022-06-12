@@ -294,9 +294,13 @@
 
 // localhost:3007/v1/api/tastie/order/add-notification : POST
 {
-    "user_id" : 1000002,
-    "content" : "Bạn đã nhận đơn hàng thành công",
-    "create_at" : "2022-05-05"
+    "user_id": 1039129,
+    "role": 1, //to check whether a notification belongs to user or provider
+    "subject": "The Dirty South",
+    "content": "has confirmed your order #483I1P7-6537131032665508", //notification content
+    "order_code": "483I1P7-6537131032665508",
+    "read_status": false,
+    "type": 1
 }
 
 
@@ -328,3 +332,8 @@
     "longitude" : "106.7002387",
     "latitude" : "10.7652217"
 }
+
+// localhost:3007/v1/api/tastie/order/update-status-notification/62a5a5b98ef0aeba7f9a4171 : PUT
+
+// localhost:3007/v1/api/tastie/order/get-all-notification-to-provider/1000005
+

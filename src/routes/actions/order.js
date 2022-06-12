@@ -1,4 +1,4 @@
-const { url_get_promotion, url_submit_order, url_submit_order_pickup, url_submit_order_items, url_get_order_detail, url_get_order_summary, url_get_order_history, url_get_shipper_info, url_update_order_status, url_clear_cart, url_get_promotion_money, url_get_promos_detail, url_add_order_review, url_add_shipper_review, url_add_notification, url_get_all_notification } = require("../../constant/url");
+const { url_get_promotion, url_submit_order, url_submit_order_pickup, url_submit_order_items, url_get_order_detail, url_get_order_summary, url_get_order_history, url_get_shipper_info, url_update_order_status, url_clear_cart, url_get_promotion_money, url_get_promos_detail, url_add_order_review, url_add_shipper_review, url_add_notification, url_get_all_notification, url_update_status_notification, url_get_all_notification_to_provider } = require("../../constant/url");
 const OrderController = require("../../controllers/ordercontrollers");
 
 
@@ -29,6 +29,8 @@ const OrderRouter = app => {
     app.post(url_add_notification, OrderController.addNotifi)
 
     app.get(url_get_all_notification, OrderController.getNotifi)
+    app.get(url_get_all_notification_to_provider, OrderController.getNotifiToProvider)
+    app.put(url_update_status_notification, OrderController.updateStatusNotifi)
 }
 
 

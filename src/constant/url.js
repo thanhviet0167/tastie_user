@@ -53,7 +53,9 @@ const url_add_order_review = '/v1/api/tastie/order/add-order-review'
 const url_add_shipper_review = '/v1/api/tastie/order/add-shipper-review'
 
 const url_add_notification = '/v1/api/tastie/order/add-notification'
+const url_update_status_notification = '/v1/api/tastie/order/update-status-notification/:notification_id'
 const url_get_all_notification = '/v1/api/tastie/order/get-all-notification/:user_id'
+const url_get_all_notification_to_provider = '/v1/api/tastie/order/get-all-notification-to-provider/:provider_id'
 
 const url_add_customer_address = '/v1/api/tastie/add-customer-address'
 const url_update_customer_address = '/v1/api/tastie/update-customer-address'
@@ -116,5 +118,7 @@ module.exports = {
     url_add_to_favorite,
     url_remove_to_favorite,
     url_get_list_provider_by_ecoupon,
-    url_get_list_provider_favorite
+    url_get_list_provider_favorite,
+    url_update_status_notification,
+    url_get_all_notification_to_provider
 };

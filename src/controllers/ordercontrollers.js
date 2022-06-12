@@ -303,6 +303,22 @@ class OrderController{
             })
         }
     }
+    static updateStatusNotifi = async ( req, res) => {
+        try {
+            
+            const status = await NotificationModels.updateStatusNotification(req.params.notification_id)
+        
+            res.status(200).json({
+                status
+            })
+
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false
+            })
+        }
+    }
 
 
     static getNotifi = async ( req, res) => {
@@ -310,6 +326,25 @@ class OrderController{
             
             const user_id = req.params.user_id
             const response = await NotificationModels.getNotification(user_id)
+          
+            res.status(200).json({
+                status : true,
+                response
+            })
+
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false,
+                response : []
+            })
+        }
+    }
+    static getNotifiToProvider = async ( req, res) => {
+        try {
+            
+            const provider_id = req.params.provider_id
+            const response = await NotificationModels.getNotificationToProvider(provider_id)
           
             res.status(200).json({
                 status : true,
