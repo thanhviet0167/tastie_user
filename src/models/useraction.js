@@ -728,7 +728,7 @@ class UserAction{
                 for(var i = 0; i < _list_provider.length; i++){
 
                     const dateNumber = new Date().getDay()
-                    const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
+                    const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber+1}')`)
                     var distance = Geolib.getDistance({
                         latitude, longitude
                     },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
@@ -803,7 +803,7 @@ class UserAction{
                     
                     for(var i = 0; i < _list_provider.length; i++){
                         const dateNumber = new Date().getDay()
-                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
+                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber+1}')`)
                         var distance = Geolib.getDistance({
                             latitude, longitude
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
@@ -884,7 +884,7 @@ class UserAction{
 
                     for(var i = 0; i < _list_provider.length; i++){
                         const dateNumber = new Date().getDay()
-                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber-1}')`)
+                        const operation_time = await host.execute(`CALL Get_Operation_Time_By_Day(${_list_provider[i].provider_id}, '${dateNumber+1}')`)
                         var distance = Geolib.getDistance({
                             latitude, longitude
                         },{ latitude: parseFloat(_list_provider[i]['latitude']), longitude: parseFloat(_list_provider[i]['longitude'])})
