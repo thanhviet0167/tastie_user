@@ -246,12 +246,34 @@ class OrderModel{
 
     static async submitOrderItems(data){
         try {
-            const {customer_id, order_code} = data
+            const {order_code, customer_id, list_product} = data
             
-            let sqlSubmitOrderItems = `CALL Submit_Order_Delivery_Items(${customer_id}, '${order_code}');`
+            for(var i = 0; i < list_product.length; i++){
+                
+                if(list_product[i]['additional_option'].length <= 0)
+                {
+                    let sqlAddProduct = `CALL Submit_Item_To_Order('${order_code}', ${list_product[i]['product_id']}, '', '', ${list_product[i]['quantity']}
+                    , '${list_product[i]['special_instruction']}', '${list_product[i]['item_code']}');`
+                    console.log(sqlAddProduct)
+                    await host.execute(sqlAddProduct)
+                }
+                else{
+                    for(var j = 0; j < list_product[i]['additional_option'].length; j++){
+                        let sqlAddProduct = `CALL Submit_Item_To_Order(${order_code}, ${list_product[i]['product_id']}, '${list_product[i]['additional_option'][j]['label']}', 
+                        '${list_product[i]['additional_option'][j]['value']}', ${list_product[i]['quantity']}
+                    , '${list_product[i]['special_instruction']}', '${list_product[i]['item_code']}');`
+                    await host.execute(sqlAddProduct)
+                    
+                    }
+                }
+                
+            }    
+            
+            //let sqlSubmitOrderItems = `CALL Submit_Order_Delivery_Items(${customer_id}, '${order_code}');`
+            // await host.execute(sqlSubmitOrderItems)
             let sqlDeleteCart = `CALL Delete_Items_From_CartDetail(${customer_id});`
         
-            await host.execute(sqlSubmitOrderItems)
+            
            
             UserAction.sleepFor(1000)
             await host.execute(sqlDeleteCart)
