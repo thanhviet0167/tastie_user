@@ -290,16 +290,18 @@ class OrderController{
     static addNotifi = async ( req, res) => {
         try {
               
-            const status = await NotificationModels.addNotification(req.body)
+            const notification_id = await NotificationModels.addNotification(req.body)
         
             res.status(200).json({
-                status
+                status : true,
+                notification_id
             })
 
         } catch (error) {
             console.log(error)
             res.status(404).json({
-                status : false
+                status : false,
+                notification_id : ""
             })
         }
     }

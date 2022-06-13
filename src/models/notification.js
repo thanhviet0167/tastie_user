@@ -83,10 +83,10 @@ class NotificationModels{
                 type,
                 create_at : new Date().toUTCString('vi-VI')
             });
-            await newNotifi.save()
-
+            const result =  await newNotifi.save()
+        
            
-            return true
+            return result['_id']
 
             
         } catch (error) {
