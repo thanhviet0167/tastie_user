@@ -186,7 +186,7 @@
 // localhost:3007/v1/api/tastie/order/submit-order-info-delivery : POST
 {
     "delivery_mode": 1,
-    "customer_id": 1000005,
+    "customer_id": 1039137,
     "delivery_address": "This is delivery address field",	
     "customer_phone": "0123456789",
     "payment_method": 1, 
@@ -203,9 +203,37 @@
 
 // localhost:3007/v1/api/tastie/order/submit-order-items : POST
 {
-    "customer_id" : ,
+    "customer_id" :1039137 ,
     "order_code" : ""
 }
+
+{
+    "order_code" : "9580A2ACC378CF6B6A1B1",
+    "list_product" : 
+    [
+        {
+            "product_id" : 1001369,
+            "quantity" : 2,
+            "special_instruction" : "abccba",
+            "item_code" : "c2e67af1-9168-4653-89c4-1bf6876c3968",
+            "additional_option" : 
+            [
+            ]
+        },
+        {
+            "product_id" : 1002439,
+            "quantity" : 1,
+            "special_instruction" : "abccba",
+            "item_code" : "6dbf2e60-3c92-4fcd-8b9b-ad8dc7e61506",
+            "additional_option" : 
+            [
+
+            ]
+        }
+    ]
+}
+
+
 
 // localhost:3007/v1/api/tastie/order/get-all-products-from-order/1 : GET
 
