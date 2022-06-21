@@ -119,7 +119,7 @@ class NotificationModels{
                     order_code : noti.order_code,
                     read_status : noti.read_status,
                     type : noti.type,
-                    create_at : new Date(noti.create_at).toLocaleString('vi-VI')
+                    create_at : noti.create_at
                 }
                 
             })
@@ -146,7 +146,7 @@ class NotificationModels{
                     order_code : noti.order_code,
                     read_status : noti.read_status,
                     type : noti.type,
-                    create_at : new Date(noti.create_at).toLocaleString('vi-VI')
+                    create_at : noti.create_at
                 }
                 
             })
