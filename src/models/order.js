@@ -91,7 +91,6 @@ class OrderModel{
             let sqlOrderDetail = `CALL Get_All_Products_From_Order ('${order_code}')`
             const [result, _] = await host.execute(sqlOrderDetail)
             const listOrderDetail = result[0]
-            console.log(listOrderDetail[0])
             var response = {
                 merchant_name: listOrderDetail[0]['merchant_name'] ? listOrderDetail[0]['merchant_name'] : null,
                 provider_id : listOrderDetail[0]['provider_id'] ? listOrderDetail[0]['provider_id'] : 0,

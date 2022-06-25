@@ -396,6 +396,18 @@ class UserModel {
         }
     }
 
+    static async submitUpcomingProductReview(data){
+        try {
+            const {upcoming_product_id, customer_id, response} = data
+            await host.execute(`CALL Submit_Upcoming_Product_Review(${upcoming_product_id}, ${customer_id}, '${response}')`);
+
+            return true
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
     
 
 }

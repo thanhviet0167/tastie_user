@@ -386,6 +386,22 @@ class UserControllers{
             })
         }
     }
+
+
+    static submitUpcomingProductReview = async (req, res) => {
+        try {
+            const status = await UserModel.submitUpcomingProductReview(req.body)
+            res.status(200).json({
+                status
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(404).json({
+                status : false
+            })
+        }
+    }
+
 }
 
 module.exports = UserControllers

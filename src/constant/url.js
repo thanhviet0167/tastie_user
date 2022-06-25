@@ -67,6 +67,7 @@ const url_payment_by_zalo = '/v1/api/tastie/order/payment-by-zalo'
 const url_get_list_provider_by_ecoupon = '/v1/api/tastie/home/get-list-provider-by-ecoupon'
 
 const url_get_list_provider_favorite = '/v1/api/tastie/home/get-list-provider-favorite'
+const url_submit_upcoming_product_review = '/v1/api/tastie/home/submit-upcoming-product-review'
 
 module.exports = {
     url_login,
@@ -120,5 +121,6 @@ module.exports = {
     url_get_list_provider_by_ecoupon,
     url_get_list_provider_favorite,
     url_update_status_notification,
-    url_get_all_notification_to_provider
+    url_get_all_notification_to_provider,
+    url_submit_upcoming_product_review
 };
