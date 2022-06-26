@@ -31,13 +31,14 @@ class OrderModel{
             const list_ecoupon = await host.execute(sqlSelectEcoupon)
             const _list_ecoupon = list_ecoupon[0][0]
             _list_promotion.forEach(element => {
+                
                 let newPromotion = {
                     id : element["promotion_id"],
                     name : element["promotion_name"],
-                    description : element["description"],
+                    description : element["promotion_description"],
                     code : element["promotion_code"],
                     value : element["promotion_value"],
-                    maximum_discount_value : element["maximum_discount_value"],
+                    maximum_discount_value : element["max_discount_value"],
                     min_order_value : element["min_order_value"],
                     start_at : new Date(element["start_at"]).toLocaleString("vi-VI"), 
                     expire_at : new Date(element["expire_at"]).toLocaleString("vi-VI"),
@@ -48,6 +49,7 @@ class OrderModel{
             });
 
             _list_ecoupon.forEach(element => {
+                console.log(element)
                 let newEcoupon = {
                     id : element["ecoupon_id"],
                     name : element["ecoupon_name"],
