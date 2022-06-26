@@ -38,7 +38,7 @@ class OrderModel{
                     description : element["promotion_description"],
                     code : element["promotion_code"],
                     value : element["promotion_value"],
-                    maximum_discount_value : element["max_discount_value"],
+                    max_discount_value : element["max_discount_value"],
                     min_order_value : element["min_order_value"],
                     start_at : new Date(element["start_at"]).toLocaleString("vi-VI"), 
                     expire_at : new Date(element["expire_at"]).toLocaleString("vi-VI"),
