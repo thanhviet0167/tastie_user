@@ -349,7 +349,7 @@ class OrderModel{
                 order_code: _list_order_summary[0]['order_code'],
                 customer_phone: _list_order_summary[0]['customer_phone'],
                 customer_address: _list_order_summary[0]['customer_address'],
-                payment_method: _list_order_summary[0]['payment_method'],
+                payment_name: _list_order_summary[0]['payment_name'],
                 subtotal: _list_order_summary[0]['subtotal'],
                 delivery_fee: _list_order_summary[0]['delivery_fee'],
                 tip: _list_order_summary[0]['tip'],
