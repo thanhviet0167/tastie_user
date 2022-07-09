@@ -356,6 +356,7 @@ class OrderModel{
                 promotion_id: _list_order_summary[0]['promotion_id'],
                 ecoupon_id: _list_order_summary[0]['ecoupon_id'],
                 delivery_method : _list_order_summary[0]['delivery_method'],
+                schedule_time : _list_order_summary[0]['schedule_time'],
                 order_status: [
                 ]
             }
