@@ -342,7 +342,7 @@ class OrderModel{
             const [list_order_summary] = await host.execute(sqlGetOrderSummary)
             const _list_order_summary = list_order_summary[0]
            
-            console.log(list_order_summary)
+            //console.log(list_order_summary)
 
             var response = {
                 order_id: _list_order_summary[0]['order_id'],
@@ -355,6 +355,7 @@ class OrderModel{
                 tip: _list_order_summary[0]['tip'],
                 promotion_id: _list_order_summary[0]['promotion_id'],
                 ecoupon_id: _list_order_summary[0]['ecoupon_id'],
+                delivery_method : _list_order_summary[0]['delivery_method'],
                 order_status: [
                 ]
             }
