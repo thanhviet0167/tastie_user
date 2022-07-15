@@ -100,7 +100,9 @@ class OrderModel{
                 items : [
                 ],
                 num_items : 0,
-                delivery_fee : listOrderDetail[0]['delivery_fee'] ? listOrderDetail[0]['delivery_fee'] : 0
+                delivery_fee : listOrderDetail[0]['delivery_fee'] ? listOrderDetail[0]['delivery_fee'] : 0,
+                longitude : listOrderDetail[0]['longitude'],
+                        latitude : listOrderDetail[0]['latitude'],
 
             }
             for(var i = 0; i < listOrderDetail.length; i++)
@@ -119,8 +121,6 @@ class OrderModel{
                         image: objectOrder['product_image'],
                         quantity: objectOrder['quantity'],
                         special_instruction: objectOrder['special_instruction'],
-                        longitude : objectOrder['longitude'],
-                        latitude : objectOrder['latitude'],
                         product_options: [
                             {
                                 label: objectOrder['label'],
