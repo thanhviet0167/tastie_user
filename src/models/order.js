@@ -93,6 +93,7 @@ class OrderModel{
             let sqlOrderDetail = `CALL Get_All_Products_From_Order ('${order_code}')`
             const [result, _] = await host.execute(sqlOrderDetail)
             const listOrderDetail = result[0]
+            console.log(listOrderDetail[0])
             var response = {
                 merchant_name: listOrderDetail[0]['merchant_name'] ? listOrderDetail[0]['merchant_name'] : null,
                 provider_id : listOrderDetail[0]['provider_id'] ? listOrderDetail[0]['provider_id'] : 0,
@@ -109,7 +110,7 @@ class OrderModel{
                     return product['product_id'] === objectOrder['product_id']
                 })
               
-                console.log(index_product)
+                console.log(objectOrder)
                 if(index_product < 0){
                     let newProduct = {
                         product_id : objectOrder['product_id'],
@@ -118,6 +119,8 @@ class OrderModel{
                         image: objectOrder['product_image'],
                         quantity: objectOrder['quantity'],
                         special_instruction: objectOrder['special_instruction'],
+                        longitude : objectOrder['longitude'],
+                        latitude : objectOrder['latitude'],
                         product_options: [
                             {
                                 label: objectOrder['label'],
@@ -391,7 +394,7 @@ class OrderModel{
             const _list_order_history = order_history[0]
 
             var respone = []
-           
+            
             _list_order_history.forEach(or_history => {
                 var index_order = respone.findIndex(_order => {
                     return (_order.order_id === or_history['order_id'])
@@ -419,7 +422,8 @@ class OrderModel{
                         order_status_nb : or_history['order_status_name'],
                         completed_at: new Date (or_history['update_at']).toLocaleString('vi-VI'),
                         payment_method: or_history['payment_name'],
-                        total_amount: or_history['total_amount']
+                        total_amount: or_history['total_amount'],
+                        delivery_mode : or_history['delivery_mode']
                     }
                     respone.push(newOrderHistory)
                 }
@@ -436,7 +440,7 @@ class OrderModel{
 
             const list_order_rated = []
             const list_order_not_rated = []
-            console.log(list_order_review)
+           
             for(var i = 0; i < respone.length; i++){
                 var index = list_order_review.findIndex(od => {
                     return od['order_id'] === respone[i]['order_id']
