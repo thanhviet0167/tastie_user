@@ -408,6 +408,35 @@ class UserModel {
         }
     }
 
+    static async getRecommendationsForCustomers(user_id){  
+        try {
+            const data = await host.execute(`CALL Get_Home_Recommend(${user_id});`);
+            
+            var data_recommend = data[0][0][0]['recommend_product'].slice(1, data[0][0][0]['recommend_product'].length-1)
+            var response = []
+            var listData = data_recommend.split("],")
+            for(var i = 0; i < listData.length; i++){
+                var splitData = listData[i].split(",")
+                var rating = splitData[1].slice(1)
+                var product_id = splitData[0].slice(1)
+              
+               
+        
+                var newData = {
+                    product_id : parseInt(product_id.indexOf('[') >= 0 ? product_id.slice(1) : product_id),
+                    rating : parseFloat(rating.indexOf(']') >= 0 ? rating.slice(0, rating.length-1) : rating)
+                }
+                response.push(newData)
+            }
+          
+        
+
+            return response
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
     
 
 }

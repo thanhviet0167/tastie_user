@@ -372,3 +372,6 @@
     "response" : "Delicious"
 }
 
+
+
+// http://:3007/v1/api/tastie/get-recommendations-for-customers/1000005 : GET

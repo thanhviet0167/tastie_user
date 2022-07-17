@@ -402,6 +402,23 @@ class UserControllers{
         }
     }
 
+    static getRecommendationsForCustomers = async (req, res) => {
+        try {
+            const user_id = req.params.user_id
+            const response = await UserModel.getRecommendationsForCustomers(user_id)
+            res.status(200).json({
+                status : true,
+                response
+            })
+
+        } catch (error) {
+            res.status(200).json({
+                status : false,
+                response : []
+            })
+        }
+    }
+
 }
 
 module.exports = UserControllers

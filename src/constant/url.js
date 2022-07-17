@@ -25,6 +25,7 @@ const url_get_customer_address = '/v1/api/tastie/checkout/get_contact/:user_id'
 const url_get_schedule = '/v1/api/tastie/checkout/get_schedule_time/:provider_id'
 
 const url_search = '/v1/api/tastie/search'
+const url_get_recommendations = '/v1/api/tastie/get-recommendations-for-customers/:user_id'
 
 
 const url_get_promotion = '/v1/api/tastie/checkout/get-all-promos/:provider_id'
@@ -122,5 +123,6 @@ module.exports = {
     url_get_list_provider_favorite,
     url_update_status_notification,
     url_get_all_notification_to_provider,
-    url_submit_upcoming_product_review
+    url_submit_upcoming_product_review,
+    url_get_recommendations
 };
